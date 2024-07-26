@@ -2,6 +2,7 @@ package com.tln;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BudgetTrackerTest {
@@ -15,46 +16,46 @@ public class BudgetTrackerTest {
 
     @Test
     public void testAddTransaction() {
-        // FIXME
-        budgetTracker.addTransaction();
+        budgetTracker.addTransaction("new", 1000.0);
         assertThat(budgetTracker.getTransactions()).hasSize(1);
         assertThat(budgetTracker.getBalance()).isEqualTo(1000.0);
     }
 
     @Test
     public void testDeleteTransaction() {
-        // FIXME
-        budgetTracker.addTransaction();
+        budgetTracker.addTransaction("open", 2000);
         int id = budgetTracker.getTransactions().get(0).getId();
-        budgetTracker.deleteTransaction();
+        budgetTracker.deleteTransaction(id);
         assertThat(budgetTracker.getTransactions()).isEmpty();
         assertThat(budgetTracker.getBalance()).isEqualTo(0.0);
     }
 
     @Test
     public void testUpdateTransaction() {
-        // FIXME
         budgetTracker.addTransaction("Salary", 1000.0);
         int id = budgetTracker.getTransactions().get(0).getId();
         budgetTracker.updateTransaction(id, "Bonus", 500.0);
-        assertThat(budgetTracker.getTransactions()).hasSize();
-        assertThat(budgetTracker.getBalance()).isEqualTo();
-        assertThat(budgetTracker.getTransactions().get(0).getDescription()).isEqualTo();
+        assertThat(budgetTracker.getTransactions()).hasSize(1);
+        assertThat(budgetTracker.getBalance()).isEqualTo(500);
+        assertThat(budgetTracker.getTransactions().get(0).getDescription()).isEqualTo("Bonus");
     }
 
     @Test
     public void testViewBalance() {
-        // FIXME
         budgetTracker.addTransaction("Salary", 1000.0);
         budgetTracker.addTransaction("Grocery", -200.0);
-        assertThat(budgetTracker.getBalance()).isEqualTo();
-        // TODO one more assert
+        assertThat(budgetTracker.getBalance()).isEqualTo(800.0);
+        assertThat(budgetTracker.getTransactions()).hasSize(2);
     }
 
     @Test
     public void testEmptyTransactionList() {
-        // FIXME
-        assertThat(budgetTracker.getTransactions()).is
+        budgetTracker.addTransaction("Salary", 1000.0);
+        budgetTracker.addTransaction("Grocery", -200.0);
+        budgetTracker.deleteTransaction(1);
+        budgetTracker.deleteTransaction(2);
+        assertThat(budgetTracker.getBalance()).isEqualTo(0);
+        assertThat(budgetTracker.getTransactions()).isEmpty();
     }
 }
 
